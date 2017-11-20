@@ -46,8 +46,12 @@ gulp.task("clean", function () {
     console.log('run clean task');
 });
 
-gulp.task("build", ['clean', 'scripts', 'styles', 'images']);
+gulp.task("watch", function () {
+    gulp.watch('sass/**/*.scss', ['styles']);
+});
+
+gulp.task("build", ['clean', 'scripts', 'styles', 'images', 'watch']);
 
 gulp.task('default', ['build'], function () {
-    gulp.watch('sass/**/*.scss/', ['styles']);
+    
 });
