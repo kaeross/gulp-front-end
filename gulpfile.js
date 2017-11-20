@@ -49,5 +49,5 @@ gulp.task("clean", function () {
 gulp.task("build", ['clean', 'scripts', 'styles', 'images']);
 
 gulp.task('default', ['build'], function () {
-    console.log('run all tasks');
+    gulp.watch('sass/**/*.scss/', ['styles']);
 });
