@@ -6,8 +6,7 @@ let gulp = require('gulp'),
     sass = require('gulp-sass'),
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
-    maps = './',
-    cleanCSS = require('gulp-clean-css');
+    maps = './';
 
 //concatenates, minifies and copies js to dist/scripts folder
 gulp.task("scripts", function () {
@@ -33,10 +32,9 @@ gulp.task("styles", function () {
             'sass/circle/core/*.scss',
         ])
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass({outputStyle: 'compressed'}))
         .pipe(rename('all.min.css'))
         .pipe(sourcemaps.write(maps))
-        //.pipe(cleanCSS)
         .pipe(gulp.dest('dist/styles'));
 });
 
