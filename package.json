@@ -1,0 +1,19 @@
+{
+  "name": "gulp-build-v1",
+  "version": "1.0.0",
+  "description": "Build tool using gulp",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaeross/gulp-front-end.git"
+  },
+  "author": "Kate Ross",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaeross/gulp-front-end/issues"
+  },
+  "homepage": "https://github.com/kaeross/gulp-front-end#readme"
+}
