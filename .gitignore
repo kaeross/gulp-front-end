@@ -2,6 +2,5 @@
 .sass-cache
 .gitignore
 /dist/
-/maps/
 /node_modules/
 
