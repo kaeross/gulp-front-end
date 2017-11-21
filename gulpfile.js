@@ -38,7 +38,9 @@ var paths = {
         dest: options.dist + '/content/icons'
     },
     images: {
-        src: options.src + '/images/**/*',
+        src: [
+            options.src + '/images/**/*'
+        ],
         dest: options.dist + '/content/images'
     }
 
@@ -63,7 +65,8 @@ gulp.task("styles", function () {
         }))
         .pipe(rename('all.min.css'))
         .pipe(sourcemaps.write(maps))
-        .pipe(gulp.dest(paths.styles.dest));
+        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(connect.reload());
 });
 
 gulp.task('moveIcons', function () {
@@ -72,16 +75,11 @@ gulp.task('moveIcons', function () {
 });
 //optimises images and copies to dist/content folder
 gulp.task("images", ['moveIcons'], function () {
-    return gulp.src(paths.images.src)
+    return gulp.src('src/images/**/*')
         .pipe(imagemin([
-            imagemin.gifsicle({
-                interlaced: true
-            }),
-            imagemin.jpegtran({
-                progressive: true
-            }),
+            imagemin.jpegtran(),
             imagemin.optipng({
-                optimizationLevel: 1
+                optimizationLevel: 7
             }),
         ]))
         .pipe(gulp.dest(paths.images.dest));
@@ -92,24 +90,24 @@ gulp.task("clean", function () {
 });
 
 gulp.task("watch", function () {
-    gulp.watch([options.src + '/sass/**/*.sass', options.src + '/sass/**/*.scss'], ['styles'])
-    .pipe(connect.reload());
+    gulp.watch([options.src + '/sass/**/*.sass', options.src + '/sass/**/*.scss'], ['styles']);
+});
+
+gulp.task("serve", function () {
+    connect.server({
+        port: 8080,
+        root: './dist',
+        livereload: true
+    });
 });
 
 gulp.task("build", function () {
-    sequence('clean', ['scripts', 'styles', 'images'], function() {
+    sequence('clean', ['scripts', 'styles', 'images'], function () {
         return gulp.src(options.src + '/index.html')
-        .pipe(gulp.dest(options.dist + '/'));
+            .pipe(gulp.dest(options.dist + '/'));
     });
-    
 });
 
 gulp.task('default', function () {
-    sequence('build', 'watch', function () {
-        connect.server({
-            port: 8080,
-            root: 'dist',
-            livereload: true
-        });
-    });
+    sequence('build','serve', 'watch');
 });
